@@ -1,12 +1,14 @@
 package services_test
 
 import (
-	"encoder/application/services"
-	"github.com/joho/godotenv"
-	"github.com/stretchr/testify/require"
 	"log"
 	"os"
 	"testing"
+
+	"github.com/joho/godotenv"
+	"github.com/stretchr/testify/require"
+
+	"encoder/application/services"
 )
 
 func init() {
@@ -24,7 +26,7 @@ func TestVideoServiceUpload(t *testing.T) {
 	videoService.Video = video
 	videoService.VideoRepository = repo
 
-	err := videoService.Download("codeeducationtest")
+	err := videoService.Download(os.Getenv("inputBucketName"))
 	require.Nil(t, err)
 
 	err = videoService.Fragment()
@@ -34,7 +36,7 @@ func TestVideoServiceUpload(t *testing.T) {
 	require.Nil(t, err)
 
 	videoUpload := services.NewVideoUpload()
-	videoUpload.OutputBucket = "codeeducationtest"
+	videoUpload.OutputBucket = os.Getenv("outputBucketName")
 	videoUpload.VideoPath = os.Getenv("localStoragePath") + "/" + video.ID
 
 	doneUpload := make(chan string)

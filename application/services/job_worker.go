@@ -4,11 +4,12 @@ import (
 	"encoder/domain"
 	"encoder/framework/utils"
 	"encoding/json"
-	uuid "github.com/satori/go.uuid"
-	"github.com/streadway/amqp"
 	"os"
 	"sync"
 	"time"
+
+	uuid "github.com/satori/go.uuid"
+	"github.com/streadway/amqp"
 )
 
 type JobWorkerResult struct {
@@ -87,6 +88,7 @@ func JobWorker(messageChannel chan amqp.Delivery, returnChan chan JobWorkerResul
 	}
 
 }
+
 func returnJobResult(job domain.Job, message amqp.Delivery, err error) JobWorkerResult {
 	result := JobWorkerResult{
 		Job:     job,

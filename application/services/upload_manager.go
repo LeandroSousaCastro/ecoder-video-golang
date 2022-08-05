@@ -1,7 +1,6 @@
 package services
 
 import (
-	"cloud.google.com/go/storage"
 	"context"
 	"io"
 	"log"
@@ -9,6 +8,8 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"cloud.google.com/go/storage"
 )
 
 type VideoUpload struct {
@@ -49,7 +50,6 @@ func (vu *VideoUpload) UploadObject(objectPath string, client *storage.Client, c
 	}
 
 	return nil
-
 }
 
 func (vu *VideoUpload) loadPaths() error {
@@ -70,7 +70,7 @@ func (vu *VideoUpload) loadPaths() error {
 
 func (vu *VideoUpload) ProcessUpload(concurrency int, doneUpload chan string) error {
 
-	in := make(chan int, runtime.NumCPU()) // qual o arquivo baseado na posicao do slice Paths
+	in := make(chan int, runtime.NumCPU()) // qual o arquivo baseado na posição do slice Paths
 	returnChannel := make(chan string)
 
 	err := vu.loadPaths()

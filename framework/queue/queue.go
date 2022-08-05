@@ -1,9 +1,10 @@
 package queue
 
 import (
-	"github.com/streadway/amqp"
 	"log"
 	"os"
+
+	"github.com/streadway/amqp"
 )
 
 type RabbitMQ struct {
@@ -55,7 +56,7 @@ func (r *RabbitMQ) Consume(messageChannel chan amqp.Delivery) {
 	q, err := r.Channel.QueueDeclare(
 		r.ConsumerQueueName, // name
 		true,                // durable
-		false,               // delete when usused
+		false,               // delete when us used
 		false,               // exclusive
 		false,               // no-wait
 		r.Args,              // arguments
@@ -69,7 +70,7 @@ func (r *RabbitMQ) Consume(messageChannel chan amqp.Delivery) {
 		false,          // exclusive
 		false,          // no-local
 		false,          // no-wait
-		nil,         // args
+		nil,            // args
 	)
 	failOnError(err, "Failed to register a consumer")
 
